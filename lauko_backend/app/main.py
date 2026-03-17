@@ -24,8 +24,8 @@ async def lifespan(app: FastAPI):
 
 # Initialize the FastAPI application with the lifespan manager
 app = FastAPI(
-    title="Trace Backend API",
-    description="High-performance backend for the Trace proactive AI companion.",
+    title="lauko Backend API",
+    description="High-performance backend for the lauko proactive AI companion.",
     version="1.0.0",
     lifespan=lifespan
 )
@@ -49,4 +49,4 @@ async def health_check():
     """
     Simple health check endpoint for deployment monitoring (e.g., Docker, Azure).
     """
-    return {"status": "healthy", "service": "Trace API"}
+    return {"status": "healthy", "service": "lauko API"}

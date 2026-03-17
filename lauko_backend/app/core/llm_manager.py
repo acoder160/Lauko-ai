@@ -5,7 +5,7 @@ from app.core.config import settings
 
 # Configure logging to monitor model fallbacks in the terminal
 logging.basicConfig(level=logging.INFO)
-logger = logging.getLogger("Trace-LLM-Manager")
+logger = logging.getLogger("lauko-LLM-Manager")
 
 class LLMManager:
     """

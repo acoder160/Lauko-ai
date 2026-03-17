@@ -3,11 +3,11 @@ from sqlalchemy.ext.asyncio import create_async_engine, async_sessionmaker, Asyn
 from sqlalchemy.orm import DeclarativeBase
 from sqlalchemy import event
 
-logger = logging.getLogger("Trace-Database")
+logger = logging.getLogger("lauko-Database")
 
 # Path to our local SQLite database file
 # We use aiosqlite driver for non-blocking async operations
-SQLALCHEMY_DATABASE_URL = "sqlite+aiosqlite:///./trace_data.db"
+SQLALCHEMY_DATABASE_URL = "sqlite+aiosqlite:///./lauko_data.db"
 
 # Create the asynchronous engine
 engine = create_async_engine(
