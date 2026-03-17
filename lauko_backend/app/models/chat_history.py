@@ -22,7 +22,6 @@ class UserProfile(Base):
     # LEVEL 3 MEMORY: A JSON-formatted string containing core facts (Dossier)
     dossier = Column(Text, default="{}", nullable=False)
     
-    updated_at = Column(DateTime(timezone=True), onupdate=func.now(), server_default=func.now())
 
 class Message(Base):
     """

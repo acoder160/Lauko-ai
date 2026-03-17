@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const API_URL = 'http://localhost:8000/api/v1';
+const API_URL = 'http://192.168.1.149:8000/api/v1';
 
 // Hardcoding the user ID for local development.
 // TODO: Replace with dynamic UUID after implementing Auth integration.

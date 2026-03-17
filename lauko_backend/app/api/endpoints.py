@@ -379,4 +379,8 @@ async def process_chat_message(
         )
 
     except Exception as e:
+        import traceback
+        print("\n" + "="*50)
+        traceback.print_exc()
+        print("="*50 + "\n")
         raise HTTPException(status_code=500, detail=f"Internal Server Error: {str(e)}")
