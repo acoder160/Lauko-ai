@@ -98,6 +98,8 @@ export default function App() {
     setInputText('');
     setSelectedFile(null);
     setIsLoading(true);
+    
+    // Dismiss keyboard on send for a cleaner feel, user can tap to type again
     Keyboard.dismiss();
 
     try {
@@ -110,8 +112,9 @@ export default function App() {
           formData.append('file', { uri: currentFile.uri, name: currentFile.name, type: currentFile.mimeType });
         }
 
+        // Make sure to use your current network IP for the file upload URL as well
         await axios.post(
-          `http://localhost:8000/api/v1/upload-file?user_id=developer_1`, 
+          `http://192.168.1.139:8000/api/v1/upload-file?user_id=developer_1`, 
           formData,
           { headers: { 'Content-Type': 'multipart/form-data' } }
         );
@@ -179,7 +182,8 @@ export default function App() {
   return (
     <KeyboardAvoidingView 
       style={styles.container} 
-      behavior={Platform.OS === 'ios' ? 'padding' : undefined}
+      behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+      keyboardVerticalOffset={Platform.OS === 'ios' ? 0 : -20} // Fix 1: Negative offset for Android to remove the gap
     >
       <View style={styles.header}>
         <TouchableOpacity style={styles.headerIcon}>
@@ -203,6 +207,7 @@ export default function App() {
           renderItem={renderMessage}
           contentContainerStyle={styles.chatContainer}
           onContentSizeChange={() => flatListRef.current?.scrollToEnd({ animated: true })}
+          keyboardShouldPersistTaps="handled" 
         />
       )}
 
@@ -236,10 +241,25 @@ export default function App() {
             placeholder="Message Lauko..."
             placeholderTextColor="#999"
             value={inputText}
-            onChangeText={setInputText}
+            onChangeText={(text) => {
+              // Fix 2: Prevent leftover newline from Enter key submission
+              if (text === '\n') {
+                setInputText('');
+              } else {
+                setInputText(text);
+              }
+            }}
+            multiline={true}
+            blurOnSubmit={false}
             onSubmitEditing={handleSend}
-            editable={!isLoading}
-            multiline
+            onKeyPress={(e) => {
+              if (e.nativeEvent.key === 'Enter') {
+                // Prevent default behavior on supported platforms
+                if (e.preventDefault) e.preventDefault();
+                handleSend();
+              }
+            }}
+            // Fix 3: Removed editable={!isLoading} so user can type while Lauko is thinking
           />
 
           {/* Centered send button with spacing */}
